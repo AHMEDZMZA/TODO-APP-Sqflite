@@ -10,13 +10,13 @@ Database? database;
 createDatabase() async {
   database = await openDatabase(
     "Database.db",
-    version: 2,
+    version: 4,
     onCreate: (Database db, int version) {
       if (kDebugMode) {
         print("Database created");
       }
       db.execute(
-        "CREATE TABLE TASKS(id INTEGER PRIMARY KEY, title TEXT, description TEXT, date TEXT, status TEXT)",
+        "CREATE TABLE TASKS(id INTEGER PRIMARY KEY, title TEXT, description TEXT, dateTime TEXT, date TEXT, image TEXT , status TEXT)",
       ).then((onValue){
         if (kDebugMode) {
           print("Table created");
@@ -33,7 +33,7 @@ createDatabase() async {
 
 /// Insert DataBase
 insertIntoDatabase(DatabaseModel task){
-  database!.rawInsert("INSERT INTO TASKS(title, description, date , status) VALUES('${task.title}', '${task.description}', '${task.date}', 'News')").then((onValue){
+  database!.rawInsert("INSERT INTO TASKS(title, description, dateTime , date , image , status) VALUES('${task.title}', '${task.description}', '${task.dateTime}' ,'${task.date}', '${task.image}' , 'News')").then((onValue){
     if (kDebugMode) {
       print("$onValue Inserted Successfully");
     }
@@ -47,4 +47,23 @@ Future<List<Map<String, dynamic>>> getDatabase() async {
     print("$onValue Get Successfully");
   }
   return onValue;
+}
+
+
+deleteDatabase( int? id ){
+  database!.rawDelete("DELETE FROM TASKS WHERE id = $id").then((onValue) {
+    if (kDebugMode) {
+      print("$onValue Deleted Successfully");
+    }
+  }
+  );
+}
+
+editDatabase(DatabaseModel task) {
+  database!.rawUpdate("UPDATE TASKS SET title = '${task.title}', description = '${task.description}', dateTime = '${task.dateTime}', date = '${task.date}', image = '${task.image}' WHERE id = '${task.id}'").then((onValue) {
+    if (kDebugMode) {
+      print("$onValue Deleted Successfully");
+    }
+  }
+  );
 }

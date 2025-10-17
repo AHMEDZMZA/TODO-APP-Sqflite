@@ -2,13 +2,17 @@ class DatabaseModel {
   final int? id;
   final String title;
   final String description;
-  final String date;
+  final String dateTime;
+  late final String? image;
+  final String? date;
 
   DatabaseModel({
     this.id,
     required this.title,
     required this.description,
     required this.date,
+    required this.dateTime,
+    this.image,
   });
 
   factory DatabaseModel.fromMap(Map<String, dynamic> map) {
@@ -17,6 +21,8 @@ class DatabaseModel {
       title: map['title'],
       description: map['description'],
       date: map['date'],
+      image: map['image'],
+      dateTime: map['dateTime'],
     );
   }
 }

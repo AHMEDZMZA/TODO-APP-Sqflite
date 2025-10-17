@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'features/manager/app_cubit.dart';
 import 'features/presentation/widgets/bottom_navigation.dart';
 
 void main() {
@@ -8,12 +10,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BottomNavigation(),
+    return BlocProvider(
+      create: (context) => AppCubit()..getData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: BottomNavigation(),
+      ),
     );
   }
 }
